@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity, TextInput} from 'react-native';
 
 const Prompt = ({ navigation, route }) => {
 
   console.log(route.params)
 
 const startingDataSource = [
-    { "title": "Elf", "releaseYear": "2003" },
-    { "title": "The Grinch", "releaseYear": "1966" },
-    { "title": "Die Hard", "releaseYear": "1988" },
-    { "title": "Home Alone", "releaseYear": "1990" },
-    { "title": "A Christmas Story", "releaseYear": "1983" }
+    { "question": "Click Next Question to Get Started!", "releaseYear": "2003" },
+    { "question": "The Grinch", "releaseYear": "1966" },
+    { "question": "Die Hard", "releaseYear": "1988" },
+    { "question": "Home Alone", "releaseYear": "1990" },
+    { "question": "A Christmas Story", "releaseYear": "1983" }
   ];
 
 
@@ -54,6 +54,17 @@ const startingDataSource = [
                   </TouchableOpacity>
                 </View>
             } />
+
+            <Text>{startingDataSource[0]["question"]}</Text>
+            
+            <TextInput
+        style={{
+          height: 40,
+          borderColor: 'gray',
+          borderWidth: 1
+        }}
+        defaultValue={movies}
+      />
         <Button title="Load More" onPress = {() => navigation.navigate('Prompt', getMoviesFromApi())} />
     </View>
   );
