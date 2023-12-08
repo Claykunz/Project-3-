@@ -6,11 +6,7 @@ const Prompt = ({ navigation, route }) => {
   console.log(route.params)
 
 const startingDataSource = [
-    { "question": "Click Next Question to Get Started!", "releaseYear": "2003" },
-    { "question": "The Grinch", "releaseYear": "1966" },
-    { "question": "Die Hard", "releaseYear": "1988" },
-    { "question": "Home Alone", "releaseYear": "1990" },
-    { "question": "A Christmas Story", "releaseYear": "1983" }
+    { "question": "Click Next Question to Get Started!", "answer": "2003" }
   ];
 
 
@@ -31,30 +27,10 @@ const startingDataSource = [
 
   };
 
-  const [movies, setMovies] = useState(startingDataSource);
-  
-
-  useEffect(() => {
-    if(route.params) {
-      setMovies(movies.concat(route.params));
-     }
-   }, [route.params]);
 
          
   return (
     <View style={styles.container}>     
-      <FlatList
-            data={movies}
-            extraData = {movies}
-            renderItem={({item}) => 
-                <View style={styles.border}>
-                  <TouchableOpacity onPress = {() => navigation.navigate('MovieDetails', item)} >
-                      <Text style={styles.item}>{item.title}</Text>  
-                      <Text style = {styles.item}>{item.description}</Text>  
-                  </TouchableOpacity>
-                </View>
-            } />
-
             <Text>{startingDataSource[0]["question"]}</Text>
             
             <TextInput
@@ -63,9 +39,10 @@ const startingDataSource = [
           borderColor: 'gray',
           borderWidth: 1
         }}
-        defaultValue={movies}
+        defaultValue="Type your answer here"
       />
-        <Button title="Load More" onPress = {() => navigation.navigate('Prompt', getMoviesFromApi())} />
+        <Button title="Next Question" onPress = {() => console.log("Pressed!")} />
+        <Button title="Check Answer" onPress = {() => console.log("Pressed!")} />
     </View>
   );
 }
