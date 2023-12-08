@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Prompt from './Prompt';
-import MovieDetails from "./MovieDetails";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -12,7 +11,6 @@ export default function App() {
    <NavigationContainer>
    <Stack.Navigator initialRouteName='Prompt'>
      <Stack.Screen name='Prompt' component={Prompt} />
-     <Stack.Screen name='MovieDetails' component={MovieDetails} />  
     </Stack.Navigator>    
     </NavigationContainer>  
      //<Prompt />

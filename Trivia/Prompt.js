@@ -6,18 +6,25 @@ const Prompt = ({ navigation, route }) => {
   console.log(route.params)
 
 const startingDataSource = [
-    { "question": "Click Next Question to Get Started!", "answer": "2003" }
+    { "title": "Click Next Question to Get Started!", "releaseYear": "2003" }
   ];
 
 
-  function getMoviesFromApi() {
-       
-  fetch('https://reactnative.dev/movies.json')
+
+  function getQuestionsFromApi() {
+       const url = 'https://api.api-ninjas.com/v1/trivia?category=music';
+    const apiKey = 'f0hvSCnb7VcjgH8efDwsqw==2jwusEVUpf8gwoix';
+  fetch(url, {
+    method: "GET",
+    headers: {
+      "X-Auth-Token": apiKey
+    }
+  })
     .then((response) =>response.json())
     .then((json) => {  
       /* view the JSON that's returned in the server log */ 
       console.log(json);      
-      setMovies(movies.concat(json.movies));
+      setQuestions(questions.concat(json.questions));
      
     })
     .catch((error) => {
@@ -27,11 +34,19 @@ const startingDataSource = [
 
   };
 
+  const [questions, setQuestions] = useState(startingDataSource);
+
+  useEffect(() => {
+    if(route.params) {
+      setMovies(questions.concat(route.params));
+     }
+   }, [route.params]);
+
 
          
   return (
     <View style={styles.container}>     
-            <Text>{startingDataSource[0]["question"]}</Text>
+            <Text>{startingDataSource[0]["title"]}</Text>
             
             <TextInput
         style={{
@@ -41,7 +56,7 @@ const startingDataSource = [
         }}
         defaultValue="Type your answer here"
       />
-        <Button title="Next Question" onPress = {() => console.log("Pressed!")} />
+        <Button title="Next Question" onPress = {() => navigation.navigate('Prompt', getQuestionsFromApi())} />
         <Button title="Check Answer" onPress = {() => console.log("Pressed!")} />
     </View>
   );
