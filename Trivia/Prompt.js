@@ -7,6 +7,7 @@ const Prompt = ({ navigation, route }) => {
 
   const [question, setQuestion] = useState("Select Next Question to get started!");
   const [answer, setAnswer] = useState("Placeholder");
+  const [userAnswer, setUserAnswer] = useState("Placeholder");
 
 
 
@@ -38,17 +39,20 @@ const Prompt = ({ navigation, route }) => {
   return (
     <View style={styles.container}>     
             <Text>{question}</Text>
-            
-            <TextInput
-        style={{
-          height: 40,
-          borderColor: 'gray',
-          borderWidth: 1
-        }}
-        defaultValue="Type your answer here"
-      />
+          
+
+          <TextInput
+            style={{height: 40,
+            borderColor: 'gray',
+            borderWidth: 1}}
+            placeholder="Enter Answer"
+            onChangeText={(newText)=>{
+              setUserAnswer(newText);
+            }}
+         
+          />
         <Button title="Next Question" onPress = {() => navigation.navigate('Prompt', getQuestionsFromApi())} />
-        <Button title="Check Answer" onPress = {() => console.log("Pressed!")} />
+        <Button title="Check Answer" onPress = {() => console.log(userAnswer)} />
     </View>
   );
 }
