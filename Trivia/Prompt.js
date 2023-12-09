@@ -3,16 +3,15 @@ import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity, TextInput} 
 
 const Prompt = ({ navigation, route }) => {
 
-  console.log(route.params)
+  //console.log(route.params)
 
-const startingDataSource = [
-    { "title": "Click Next Question to Get Started!", "releaseYear": "2003" }
-  ];
+  const [question, setQuestion] = useState("Select Next Question to get started!");
+  const [answer, setAnswer] = useState("Placeholder");
 
 
 
   function getQuestionsFromApi() {
-       const url = 'https://api.api-ninjas.com/v1/trivia?category=music';
+       const url = 'https://api.api-ninjas.com/v1/trivia?category=sportsleisure';
     const apiKey = 'f0hvSCnb7VcjgH8efDwsqw==2jwusEVUpf8gwoix';
   fetch(url, {
     method: "GET",
@@ -23,8 +22,9 @@ const startingDataSource = [
     .then((response) =>response.json())
     .then((json) => {  
       /* view the JSON that's returned in the server log */ 
-      console.log(json);      
-      setQuestions(questions.concat(json.questions));
+      console.log(json);        
+      setQuestion(json[0].question);
+      setAnswer(json[0].answer);
      
     })
     .catch((error) => {
@@ -34,19 +34,10 @@ const startingDataSource = [
 
   };
 
-  const [questions, setQuestions] = useState(startingDataSource);
-
-  useEffect(() => {
-    if(route.params) {
-      setMovies(questions.concat(route.params));
-     }
-   }, [route.params]);
-
-
          
   return (
     <View style={styles.container}>     
-            <Text>{startingDataSource[0]["title"]}</Text>
+            <Text>{question}</Text>
             
             <TextInput
         style={{
