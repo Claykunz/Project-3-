@@ -8,6 +8,7 @@ const Prompt = ({ navigation, route }) => {
   const [question, setQuestion] = useState("Select Next Question to get started!");
   const [answer, setAnswer] = useState("Placeholder");
   const [userAnswer, setUserAnswer] = useState("Placeholder");
+  const [grade, setGrade] = useState("");
 
 
 
@@ -35,6 +36,17 @@ const Prompt = ({ navigation, route }) => {
 
   };
 
+  function isCorrectAnswer() {
+      if(answer == userAnswer) {
+          setGrade("Correct!");
+      } else {
+        setGrade("Incorrect...");
+      }
+  };
+
+  function resetGrade() {
+    setGrade("");
+};
          
   return (
     <View style={styles.container}>     
@@ -51,8 +63,9 @@ const Prompt = ({ navigation, route }) => {
             }}
          
           />
-        <Button title="Next Question" onPress = {() => navigation.navigate('Prompt', getQuestionsFromApi())} />
-        <Button title="Check Answer" onPress = {() => console.log(userAnswer)} />
+        <Button title="Next Question" onPress = {() => navigation.navigate('Prompt', getQuestionsFromApi(),resetGrade())} />
+        <Button title="Check Answer" onPress = {() => navigation.navigate('Prompt', isCorrectAnswer())} />
+        <Text>{grade}</Text>
     </View>
   );
 }
