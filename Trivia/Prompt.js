@@ -37,7 +37,7 @@ const Prompt = ({ navigation, route }) => {
   };
 
   function isCorrectAnswer() {
-      if(answer == userAnswer) {
+      if(answer.toLowerCase() == userAnswer.toLowerCase()) {
           setGrade("Correct!");
       } else {
         setGrade("Incorrect...");
