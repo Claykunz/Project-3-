@@ -9,6 +9,7 @@ const Prompt = ({ navigation, route }) => {
   const [answer, setAnswer] = useState("Placeholder");
   const [userAnswer, setUserAnswer] = useState("Placeholder");
   const [grade, setGrade] = useState("");
+  const [playerScore, setPlayerScore] = useState(0);
 
 
 
@@ -37,16 +38,23 @@ const Prompt = ({ navigation, route }) => {
   };
 
   function isCorrectAnswer() {
-      if(answer.toLowerCase() == userAnswer.toLowerCase()) {
-          setGrade("Correct!");
-      } else {
-        setGrade("Incorrect...");
-      }
-  };
+    if (answer.toLowerCase() === userAnswer.toLowerCase()) {
+      setGrade("Correct!");
+      incrementPlayerScore();
+    } else {
+      setGrade("Incorrect...");
+    }
+  }
+  
 
   function resetGrade() {
     setGrade("");
 };
+
+function incrementPlayerScore() {
+  setPlayerScore(playerScore + 1);
+}
+
          
   return (
     <View style={styles.container}>     
@@ -66,9 +74,11 @@ const Prompt = ({ navigation, route }) => {
         <Button title="Next Question" onPress = {() => navigation.navigate('Prompt', getQuestionsFromApi(),resetGrade())} />
         <Button title="Check Answer" onPress = {() => navigation.navigate('Prompt', isCorrectAnswer())} />
         <Text>{grade}</Text>
+        <Text>{`Player = ${playerScore}`}</Text>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
     container: {
