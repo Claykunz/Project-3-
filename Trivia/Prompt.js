@@ -17,7 +17,7 @@ const startingDataSource = [
   fetch(url, {
     method: "GET",
     headers: {
-      "X-Auth-Token": apiKey
+      "X-Api-Key": apiKey
     }
   })
     .then((response) =>response.json())
