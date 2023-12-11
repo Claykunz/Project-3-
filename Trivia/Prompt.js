@@ -10,10 +10,12 @@ const Prompt = ({ navigation, route }) => {
   const [userAnswer, setUserAnswer] = useState("Placeholder");
   const [grade, setGrade] = useState("");
   const [playerScore, setPlayerScore] = useState(0);
+  const [qindex, setIndex] = useState(0);
 
 
 
   function getQuestionsFromApi() {
+  if (qindex < 5) {
        const url = 'https://api.api-ninjas.com/v1/trivia?category=sportsleisure';
     const apiKey = 'f0hvSCnb7VcjgH8efDwsqw==2jwusEVUpf8gwoix';
   fetch(url, {
@@ -25,15 +27,25 @@ const Prompt = ({ navigation, route }) => {
     .then((response) =>response.json())
     .then((json) => {  
       /* view the JSON that's returned in the server log */ 
-      console.log(json);        
+      console.log(json);    
+      console.log(qindex);
       setQuestion(json[0].question);
       setAnswer(json[0].answer);
+      if (setIndex == 5){
+        
+      }
      
     })
     .catch((error) => {
        console.error(error);
     });
+  }
+  else {
+    console.log("End of quiz");
+    setQuestion("End of quiz, Hit Restart to try Again ");
 
+
+  }
 
   };
 
@@ -41,8 +53,11 @@ const Prompt = ({ navigation, route }) => {
     if (answer.toLowerCase() === userAnswer.toLowerCase()) {
       setGrade("Correct!");
       incrementPlayerScore();
+      
+
     } else {
       setGrade("Incorrect...");
+      
     }
   }
   
@@ -53,6 +68,17 @@ const Prompt = ({ navigation, route }) => {
 
 function incrementPlayerScore() {
   setPlayerScore(playerScore + 1);
+}
+function handleNextQuestion() {
+  setIndex(qindex + 1);
+}
+
+function Restart() {
+  setIndex(0);
+  setPlayerScore(0);
+  resetGrade();
+
+
 }
 
          
@@ -71,10 +97,14 @@ function incrementPlayerScore() {
             }}
          
           />
-        <Button title="Next Question" onPress = {() => navigation.navigate('Prompt', getQuestionsFromApi(),resetGrade())} />
+        <Text>Question: {qindex}</Text>
+        <Text>{`Score = ${playerScore}`}</Text>
+        <Button title="Next Question" onPress = {() => navigation.navigate('Prompt', getQuestionsFromApi(),resetGrade(), handleNextQuestion())} />
         <Button title="Check Answer" onPress = {() => navigation.navigate('Prompt', isCorrectAnswer())} />
+        <Button title="Restart Game" onPress = {() => navigation.navigate('Prompt', Restart())} />
+        
         <Text>{grade}</Text>
-        <Text>{`Player = ${playerScore}`}</Text>
+        
     </View>
   );
 }
