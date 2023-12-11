@@ -42,7 +42,7 @@ const Prompt = ({ navigation, route }) => {
   }
   else {
     console.log("End of quiz");
-    setQuestion("End of quiz, Hit Restart to try Again ");
+    setQuestion("End of quiz. Hit Restart to try Again.");
 
 
   }
@@ -56,7 +56,7 @@ const Prompt = ({ navigation, route }) => {
       
 
     } else {
-      setGrade("Incorrect...");
+      setGrade("Incorrect. The answer is: " + answer);
       
     }
   }
@@ -70,13 +70,18 @@ function incrementPlayerScore() {
   setPlayerScore(playerScore + 1);
 }
 function handleNextQuestion() {
-  setIndex(qindex + 1);
+  if(qindex <5) {
+    setIndex(qindex + 1);
+  }
+  
 }
 
 function Restart() {
+  setQuestion("Select Next Question to get started!");
   setIndex(0);
   setPlayerScore(0);
   resetGrade();
+  
 
 
 }
